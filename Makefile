@@ -6,4 +6,4 @@ default: all
 all: main
 
 main: main.c
-	$(CC) $(CFLAGS) -o build/main main.c
+	$(CC) $(CFLAGS) -o build/main.js main.c
