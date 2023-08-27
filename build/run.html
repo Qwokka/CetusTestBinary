@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en-us">
+<script>
+
+const getUrlParam = function(paramName) {
+    const url = new URL(document.location);
+    return url.searchParams.get(paramName);
+}
+
+const methodInstantiate = async function(info, receiveInstance) {
+    const result = await fetch(binaryName);
+    const arrayBuffer = await result.arrayBuffer();
+    WebAssembly.instantiate(arrayBuffer, info).then(
+        result => receiveInstance(result['instance'])
+    );
+}
+
+const methodInstantiateStreaming = async function(info, receiveInstance) {
+    WebAssembly.instantiateStreaming(fetch(binaryName), info).then(
+        result => receiveInstance(result['instance'])
+    );
+}
+
+const methodInstance = async function(info, receiveInstance) {
+    const result = await fetch(binaryName);
+    const arrayBuffer = await result.arrayBuffer();
+    const module = new WebAssembly.Module(arrayBuffer);
+    console.log(module);
+    const instance = new WebAssembly.Instance(module, info);
+    console.log(instance);
+
+    receiveInstance(instance);
+}
+
+const getInstantiateMethod = function(method) {
+    switch (method) {
+        case "instantiate":
+            return methodInstantiate;
+        case "instantiateStreaming":
+            return methodInstantiateStreaming;
+        case "instance":
+            return methodInstance;
+        default:
+            throw new Error("Bad method " + method);
+    }
+}
+
+const paramName = getUrlParam("name");
+const paramMethod = getUrlParam("method");
+
+const binaryName = paramName + ".wasm";
+const scriptName = paramName + ".js";
+
+window.Module = {};
+
+Module.instantiateWasm = getInstantiateMethod(paramMethod);
+
+setTimeout(function() {
+    const script = document.createElement("script");
+    script.setAttribute("src", scriptName);
+    document.body.append(script);
+}, 500);
+</script>
+</html>

@@ -1,9 +1,21 @@
 CC      = emcc
 CFLAGS  = -sASYNCIFY
 
+CP      = cp
+RM      = rm
+
 default: all
 
-all: main
+all: clean run simple multivalue
 
-main: main.c
-	$(CC) $(CFLAGS) -o build/main.js main.c
+clean:
+	$(RM) -f build/*
+
+run:
+	$(CP) run.html build/run.html
+
+simple: simple.c
+	$(CC) $(CFLAGS) -o build/simple.js simple.c
+
+multivalue: multivalue.c
+	$(CC) $(CFLAGS) -o build/multivalue.js multivalue.c
