@@ -6,7 +6,7 @@ RM      = rm
 
 default: all
 
-all: clean run simple multivalue
+all: run simple multivalue strings
 
 clean:
 	$(RM) -f build/*
@@ -19,3 +19,6 @@ simple: src/simple.c
 
 multivalue: src/multivalue.c
 	$(CC) $(CFLAGS) -o build/multivalue.js src/multivalue.c
+
+strings: src/strings.c
+	$(CC) $(CFLAGS) -o build/strings.js src/strings.c
