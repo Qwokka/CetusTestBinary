@@ -12,10 +12,10 @@ clean:
 	$(RM) -f build/*
 
 run:
-	$(CP) run.html build/run.html
+	$(CP) html/* build/
 
-simple: simple.c
-	$(CC) $(CFLAGS) -o build/simple.js simple.c
+simple: src/simple.c
+	$(CC) $(CFLAGS) -o build/simple.js src/simple.c
 
-multivalue: multivalue.c
-	$(CC) $(CFLAGS) -o build/multivalue.js multivalue.c
+multivalue: src/multivalue.c
+	$(CC) $(CFLAGS) -o build/multivalue.js src/multivalue.c
