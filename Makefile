@@ -6,7 +6,7 @@ RM      = rm
 
 default: all
 
-all: run simple multivalue strings
+all: run simple multivalue strings speedhack
 
 clean:
 	$(RM) -f build/*
@@ -22,3 +22,6 @@ multivalue: src/multivalue.c
 
 strings: src/strings.c
 	$(CC) $(CFLAGS) -o build/strings.js src/strings.c
+
+speedhack: src/speedhack.c
+	$(CC) $(CFLAGS) -o build/speedhack.js src/speedhack.c
